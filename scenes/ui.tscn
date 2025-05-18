@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://6fauqiuifkj6"]
+
+[ext_resource type="Script" uid="uid://nmwvwsqw6sh2" path="res://scripts/ui.gd" id="1_nt7q6"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nt7q6")
+
+[node name="Threshold" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 30.0
+offset_right = 400.0
+offset_bottom = 46.0
+min_value = -80.0
+max_value = 20.0
+tick_count = 20
+ticks_on_borders = true
+
+[node name="ThresholdValue" type="Label" parent="."]
+layout_mode = 0
+offset_left = 419.0
+offset_top = 29.0
+offset_right = 459.0
+offset_bottom = 52.0
+text = "-50"
+
+[node name="Debug" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 56.0
+offset_right = 450.0
+offset_bottom = 155.0
+bbcode_enabled = true
+text = "[b]Input : [/b]
+[b]Output V : [/b]
+[b]Output W : [/b]
+[b]Delay : [/b]"
+
+[connection signal="value_changed" from="Threshold" to="." method="_on_threshold_value_changed"]

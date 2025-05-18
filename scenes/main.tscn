@@ -1,0 +1,93 @@
+[gd_scene load_steps=11 format=3 uid="uid://coindgqp3r1la"]
+
+[ext_resource type="PackedScene" uid="uid://6fauqiuifkj6" path="res://scenes/ui.tscn" id="1_o5qli"]
+[ext_resource type="Texture2D" uid="uid://inksjlu1acf" path="res://sprites/gaia2.png" id="2_sugp2"]
+[ext_resource type="Texture2D" uid="uid://dv4jki6uiqwvo" path="res://sprites/gaia1.png" id="3_jyhfs"]
+[ext_resource type="Script" uid="uid://4qoxfl1ubv2m" path="res://scripts/char_manager.gd" id="3_tbgi4"]
+[ext_resource type="Script" uid="uid://dq3rajkhiqy2s" path="res://scripts/audio_manager.gd" id="4_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://ghceqo5c6mus" path="res://sprites/ines2.png" id="6_o6xl0"]
+[ext_resource type="Texture2D" uid="uid://bf1pnllwi0yne" path="res://sprites/ines1.png" id="7_tipki"]
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_tbgi4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tbgi4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_sugp2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_jyhfs")
+}],
+"loop": true,
+"name": &"speak",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_85g3d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_o6xl0")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_tipki")
+}],
+"loop": true,
+"name": &"speak",
+"speed": 5.0
+}]
+
+[node name="Main" type="Node3D"]
+
+[node name="UI" parent="." instance=ExtResource("1_o5qli")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13259, 4.29096)
+
+[node name="AudioManager" type="Node" parent="."]
+script = ExtResource("4_jyhfs")
+
+[node name="AudioStreamRecord" type="AudioStreamPlayer" parent="AudioManager"]
+stream = SubResource("AudioStreamMicrophone_tbgi4")
+autoplay = true
+bus = &"Record2"
+
+[node name="AudioStreamPlayerW" type="AudioStreamPlayer" parent="AudioManager"]
+autoplay = true
+bus = &"Woufeuse"
+
+[node name="AudioStreamPlayerV" type="AudioStreamPlayer" parent="AudioManager"]
+autoplay = true
+bus = &"Vraisorcier"
+
+[node name="TimerThreshold" type="Timer" parent="AudioManager"]
+one_shot = true
+
+[node name="TimerDelay" type="Timer" parent="AudioManager"]
+one_shot = true
+
+[node name="CharManager" type="Node" parent="."]
+script = ExtResource("3_tbgi4")
+
+[node name="Woufeuse" type="AnimatedSprite3D" parent="CharManager"]
+transform = Transform3D(0.36898, 0, 0, 0, 0.36898, 0, 0, 0, 1, 1, 1.34136, 0)
+sprite_frames = SubResource("SpriteFrames_tbgi4")
+animation = &"idle"
+
+[node name="Vraisorcier" type="AnimatedSprite3D" parent="CharManager"]
+transform = Transform3D(0.36898, 0, 0, 0, 0.36898, 0, 0, 0, 1, -0.9, 1.34136, 0)
+sprite_frames = SubResource("SpriteFrames_85g3d")
+animation = &"speak"
+
+[connection signal="timeout" from="AudioManager/TimerDelay" to="AudioManager" method="_on_timer_delay_timeout"]
