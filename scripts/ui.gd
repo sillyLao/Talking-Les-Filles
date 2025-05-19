@@ -3,13 +3,18 @@ extends Control
 @onready var AudioManager = $"../AudioManager"
 @onready var voice_woufeuse : AudioStreamPlayer = $"../AudioManager/AudioStreamPlayerW"
 @onready var voice_vraisorcier : AudioStreamPlayer = $"../AudioManager/AudioStreamPlayerV"
+@onready var input_list : OptionButton = $SettingsPanel/MicrophoneList
+@onready var output_list : OptionButton = $SettingsPanel/SpeakerList
 
 @onready var threshold : int = AudioManager.threshold
-
 func _ready():
 	$SettingsPanel.hide()
 	$SettingsPanel/ThresholdSlider.value = threshold
 	$SettingsPanel/ThresholdValue.text = str(threshold)
+	for device in AudioServer.get_input_device_list():
+		input_list.add_item(device)
+	for device in AudioServer.get_output_device_list():
+		output_list.add_item(device)
 
 func _process(_delta):
 	$SettingsPanel/Debug.text = "[b]Input : [/b]" + str(AudioManager.input_power) + "
@@ -41,3 +46,8 @@ func _on_volume_slider_value_changed(value):
 		if value == -30.0:
 			voice_woufeuse.volume_db = -80
 		voice_vraisorcier.volume_db = -80
+
+func _on_microphone_list_item_selected(index):
+	AudioServer.set_input_device(input_list.get_item_text(index))
+func _on_speaker_list_item_selected(index):
+	AudioServer.set_output_device(output_list.get_item_text(index))

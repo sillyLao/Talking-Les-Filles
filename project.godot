@@ -21,8 +21,8 @@ driver/enable_input=true
 
 [display]
 
-window/size/viewport_width=480
-window/size/viewport_height=720
+window/size/viewport_width=560
+window/size/viewport_height=996
 
 [input]
 
@@ -36,6 +36,11 @@ ESC={
 
 pointing/android/enable_long_press_as_right_click=true
 pointing/emulate_touch_from_mouse=true
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+3d/solver/default_contact_bias=1.0
 
 [rendering]
 

@@ -1,5 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://coindgqp3r1la"]
+[gd_scene load_steps=23 format=3 uid="uid://coindgqp3r1la"]
 
+[ext_resource type="Script" uid="uid://o7qn56gw5y07" path="res://scripts/main.gd" id="1_85g3d"]
 [ext_resource type="PackedScene" uid="uid://6fauqiuifkj6" path="res://scenes/ui.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://inksjlu1acf" path="res://assets/sprites/gaia2.png" id="2_sugp2"]
 [ext_resource type="Texture2D" uid="uid://dv4jki6uiqwvo" path="res://assets/sprites/gaia1.png" id="3_jyhfs"]
@@ -35,6 +36,46 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_tipki"]
+size = Vector3(0.0615234, 2.52704, 1.4209)
+
+[sub_resource type="Animation" id="Animation_85g3d"]
+resource_name = "hit"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.2),
+"transitions": PackedFloat32Array(0.378929, 2.82843, 1),
+"update": 0,
+"values": [Vector3(0.36898, 0.36898, 1), Vector3(0.429, 0.429, 1.163), Vector3(0.369, 0.369, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_choun"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.36898, 0.36898, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ya4ey"]
+_data = {
+&"RESET": SubResource("Animation_choun"),
+&"hit": SubResource("Animation_85g3d")
+}
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_85g3d"]
 animations = [{
 "frames": [{
@@ -54,12 +95,28 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_85g3d"]
+size = Vector3(0.0615234, 2.68652, 1.57275)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eb6dy"]
+size = Vector3(13.68, 6.26205, 8.22)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_choun"]
+size = Vector3(11.8588, 13.4729, 6.01008)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_trceg"]
+size = Vector3(11.8588, 13.4729, 9.21857)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ya4ey"]
+size = Vector3(11.8588, 4.51501, 10.9502)
+
 [node name="Main" type="Node3D"]
+script = ExtResource("1_85g3d")
 
 [node name="UI" parent="." instance=ExtResource("1_o5qli")]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
-transform = Transform3D(0, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, -1, 1.91069e-15, -4.37114e-08, 1.13167, 6.65374, 0.619147)
+transform = Transform3D(0, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, -1, 1.91069e-15, -4.37114e-08, 1.13167, 8.58584, 0.619147)
 light_energy = 6.433
 light_size = 0.704
 shadow_enabled = true
@@ -69,7 +126,7 @@ spot_attenuation = 1.1
 spot_angle = 54.97
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.66267, 1.96541, 0.619147)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.16347, 1.96541, 0.619147)
 keep_aspect = 0
 environment = SubResource("Environment_tipki")
 
@@ -98,21 +155,87 @@ one_shot = true
 [node name="CharManager" type="Node" parent="."]
 script = ExtResource("3_tbgi4")
 
-[node name="Woufeuse" type="AnimatedSprite3D" parent="CharManager"]
-transform = Transform3D(-1.61286e-08, 0, 1, 0, 0.36898, 0, -0.36898, 0, -4.37114e-08, 0.371714, 1.34133, -0.381447)
+[node name="Woufeuse" type="RigidBody3D" parent="CharManager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.372, 1.42961, -0.381)
+mass = 84.834
+
+[node name="Sprite" type="AnimatedSprite3D" parent="CharManager/Woufeuse"]
+transform = Transform3D(-1.61286e-08, 0, 1, 0, 0.36898, 0, -0.36898, 0, -4.37114e-08, 0, 0, 0)
 alpha_cut = 2
 sprite_frames = SubResource("SpriteFrames_tbgi4")
 animation = &"idle"
 
-[node name="Vraisorcier" type="AnimatedSprite3D" parent="CharManager"]
-transform = Transform3D(-1.61286e-08, 0, 1, 0, 0.36898, 0, -0.36898, 0, -4.37114e-08, 0.371714, 1.34136, 1.51855)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharManager/Woufeuse"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0683289, 0.166504)
+visible = false
+shape = SubResource("BoxShape3D_tipki")
+disabled = true
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="CharManager/Woufeuse"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+depth = 0.145
+polygon = PackedVector2Array(-0.374337, -1.20789, -0.296978, -1.13792, -0.346953, -0.555851, -0.289459, -0.0648823, -0.45981, -0.592436, -0.647573, -0.620684, -0.685095, -0.4611, -0.371234, 0.0944963, -0.741139, 0.27672, -0.839345, 0.768758, -0.455764, 1.12656, 0.0861439, 1.14569, 0.465756, 0.676678, 0.483783, 0.305134, 0.116759, 0.100047, 0.442676, -0.24147, 0.370978, -0.432774, 0.213358, -0.377428, -0.00322661, 0.0302608, 0.109332, -0.496208, 0.124114, -1.08841, 0.219108, -1.21589, 0.19626, -1.31068, -0.402, -1.311)
+
+[node name="RagdollReset" type="Timer" parent="CharManager/Woufeuse"]
+one_shot = true
+
+[node name="AnimationWoufeuse" type="AnimationPlayer" parent="CharManager/Woufeuse"]
+libraries = {
+&"": SubResource("AnimationLibrary_ya4ey")
+}
+
+[node name="Vraisorcier" type="RigidBody3D" parent="CharManager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.372, 1.4305, 1.519)
+mass = 58.595
+
+[node name="Sprite" type="AnimatedSprite3D" parent="CharManager/Vraisorcier"]
+transform = Transform3D(-1.61286e-08, 0, 1, 0, 0.36898, 0, -0.36898, 0, -4.37114e-08, 0, 0, 0)
 alpha_cut = 2
 sprite_frames = SubResource("SpriteFrames_85g3d")
-animation = &"speak"
+animation = &"idle"
 
-[node name="room1" parent="." instance=ExtResource("8_tipki")]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharManager/Vraisorcier"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00683594, 0.0905762)
+visible = false
+shape = SubResource("BoxShape3D_85g3d")
+disabled = true
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="CharManager/Vraisorcier"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+depth = 0.145
+polygon = PackedVector2Array(-0.72772, -1.1452, -0.72772, -1.1452, -0.860122, -0.714163, -0.366004, 0.00413001, -0.524032, 0.00759363, -0.670783, 0.248496, -0.857291, 0.459976, -0.562794, 0.564379, -0.612831, 0.783879, -0.399139, 0.697701, -0.172927, 1.12267, 0.121769, 0.720012, 0.372356, 0.801964, 0.342053, 0.595137, 0.648694, 0.502072, 0.509261, 0.331667, 0.383249, 0.0208127, 0.17304, 0.0479949, 0.694373, -0.594895, 0.568832, -1.02639, 0.395, -1.345, -0.430037, -1.34505)
+
+[node name="RagdollReset" type="Timer" parent="CharManager/Vraisorcier"]
+one_shot = true
+
+[node name="AnimationVraisorcier" type="AnimationPlayer" parent="CharManager/Vraisorcier"]
+libraries = {
+&"": SubResource("AnimationLibrary_ya4ey")
+}
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.884047, 0, 0.554767)
+
+[node name="room1" parent="StaticBody3D" instance=ExtResource("8_tipki")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07, -3.12003, 0)
+shape = SubResource("BoxShape3D_eb6dy")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.725739, 6.23645, 5.54771)
+shape = SubResource("BoxShape3D_choun")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.725739, 6.23645, -6.94727)
+shape = SubResource("BoxShape3D_trceg")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.725739, 10.0146, 1.11371)
+shape = SubResource("BoxShape3D_ya4ey")
 
 [connection signal="finished" from="AudioManager/AudioStreamPlayerW" to="AudioManager" method="_on_audio_stream_player_w_finished"]
 [connection signal="finished" from="AudioManager/AudioStreamPlayerV" to="AudioManager" method="_on_audio_stream_player_v_finished"]
 [connection signal="timeout" from="AudioManager/TimerDelay" to="AudioManager" method="_on_timer_delay_timeout"]
+[connection signal="animation_finished" from="CharManager/Woufeuse/AnimationWoufeuse" to="CharManager" method="_on_animation_woufeuse_animation_finished"]
+[connection signal="animation_finished" from="CharManager/Vraisorcier/AnimationVraisorcier" to="CharManager" method="_on_animation_vraisorcier_animation_finished"]

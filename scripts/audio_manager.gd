@@ -17,12 +17,12 @@ func _ready():
 
 func _physics_process(_delta):
 	input_power = AudioServer.get_bus_peak_volume_left_db(AudioServer.get_bus_index("Record2"), 0)
-	print_rich("[b]IN :[/b] " + str(input_power))
-	check_volume(input_power)
 	output_power_woufeuse = AudioServer.get_bus_peak_volume_left_db(AudioServer.get_bus_index("Woufeuse"), 0)
-	print_rich("[b]OUT W :[/b] " + str(output_power_woufeuse))
 	output_power_vraisorcier = AudioServer.get_bus_peak_volume_left_db(AudioServer.get_bus_index("Vraisorcier"), 0)
-	print_rich("[b]OUT V :[/b] " + str(output_power_vraisorcier))
+	check_volume(input_power)
+	#print_rich("[b]IN :[/b] " + str(input_power))
+	#print_rich("[b]OUT W :[/b] " + str(output_power_woufeuse))
+	#print_rich("[b]OUT V :[/b] " + str(output_power_vraisorcier))
 
 func start_recording():
 	effect.set_recording_active(true)
@@ -65,12 +65,14 @@ func voice():
 	$TimerDelay.start()
 
 func woufeuse_speak():
-	$AudioStreamPlayerW.play()
-	CharManager.state_woufeuse = "speak"
+	if CharManager.state["Woufeuse"] in ["idle", "speak"]:
+		$AudioStreamPlayerW.play()
+		CharManager.state["Woufeuse"] = "speak"
 	
 func vraisorcier_speak():
-	$AudioStreamPlayerV.play()
-	CharManager.state_vraisorcier = "speak"
+	if CharManager.state["Vraisorcier"] in ["idle", "speak"]:
+		$AudioStreamPlayerV.play()
+		CharManager.state["Vraisorcier"] = "speak"
 
 func _on_timer_delay_timeout():
 	if sign(delay) == 1:
@@ -79,6 +81,6 @@ func _on_timer_delay_timeout():
 		woufeuse_speak()
 
 func _on_audio_stream_player_w_finished():
-	CharManager.state_woufeuse = "idle"
+	CharManager.state["Woufeuse"] = "idle"
 func _on_audio_stream_player_v_finished():
-	CharManager.state_vraisorcier = "idle"
+	CharManager.state["Vraisorcier"] = "idle"
