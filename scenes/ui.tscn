@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://6fauqiuifkj6"]
+[gd_scene load_steps=4 format=3 uid="uid://6fauqiuifkj6"]
 
 [ext_resource type="Script" uid="uid://nmwvwsqw6sh2" path="res://scripts/ui.gd" id="1_nt7q6"]
+[ext_resource type="Texture2D" uid="uid://dgwi4lg7p1ld" path="res://assets/sprites/settings.png" id="2_x4jx1"]
+
+[sub_resource type="SystemFont" id="SystemFont_x4jx1"]
+font_names = PackedStringArray("Sans-Serif")
+font_weight = 999
+subpixel_positioning = 0
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -11,35 +17,100 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nt7q6")
 
-[node name="Threshold" type="HSlider" parent="."]
-layout_mode = 0
-offset_left = 26.0
-offset_top = 30.0
-offset_right = 400.0
-offset_bottom = 46.0
-min_value = -80.0
-max_value = 20.0
-tick_count = 20
-ticks_on_borders = true
+[node name="SettingsPanel" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="ThresholdValue" type="Label" parent="."]
+[node name="ColorRect" type="ColorRect" parent="SettingsPanel"]
 layout_mode = 0
-offset_left = 419.0
-offset_top = 29.0
-offset_right = 459.0
-offset_bottom = 52.0
-text = "-50"
+offset_left = 20.0
+offset_top = 200.0
+offset_right = 460.0
+offset_bottom = 700.0
+mouse_filter = 2
+color = Color(0.235294, 0.235294, 0.235294, 0.760784)
 
-[node name="Debug" type="RichTextLabel" parent="."]
+[node name="Debug" type="RichTextLabel" parent="SettingsPanel"]
 layout_mode = 0
-offset_left = 22.0
-offset_top = 56.0
-offset_right = 450.0
-offset_bottom = 155.0
+offset_left = 35.0
+offset_top = 212.0
+offset_right = 463.0
+offset_bottom = 311.0
 bbcode_enabled = true
 text = "[b]Input : [/b]
 [b]Output V : [/b]
 [b]Output W : [/b]
 [b]Delay : [/b]"
 
-[connection signal="value_changed" from="Threshold" to="." method="_on_threshold_value_changed"]
+[node name="Threshold" type="Label" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 341.0
+offset_right = 135.0
+offset_bottom = 376.0
+theme_override_fonts/font = SubResource("SystemFont_x4jx1")
+theme_override_font_sizes/font_size = 24
+text = "Seuil"
+
+[node name="ThresholdSlider" type="HSlider" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 149.135
+offset_top = 352.0
+offset_right = 389.135
+offset_bottom = 368.0
+min_value = -80.0
+max_value = 20.0
+value = -50.0
+tick_count = 18
+ticks_on_borders = true
+
+[node name="ThresholdValue" type="Label" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 403.0
+offset_top = 350.0
+offset_right = 443.0
+offset_bottom = 373.0
+text = "-50"
+
+[node name="Volume" type="Label" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 378.0
+offset_right = 136.0
+offset_bottom = 413.0
+theme_override_fonts/font = SubResource("SystemFont_x4jx1")
+theme_override_font_sizes/font_size = 24
+text = "Volume"
+
+[node name="VolumeSlider" type="HSlider" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 149.135
+offset_top = 389.0
+offset_right = 389.135
+offset_bottom = 405.0
+min_value = -30.0
+max_value = 30.0
+step = 0.0
+value = 1.0
+
+[node name="VolumeValue" type="Label" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 403.0
+offset_top = 387.0
+offset_right = 443.0
+offset_bottom = 410.0
+text = "0"
+
+[node name="Settings" type="Button" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 13.0
+offset_right = 102.0
+offset_bottom = 101.0
+icon = ExtResource("2_x4jx1")
+flat = true
+
+[connection signal="value_changed" from="SettingsPanel/ThresholdSlider" to="." method="_on_threshold_value_changed"]
+[connection signal="value_changed" from="SettingsPanel/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="pressed" from="Settings" to="." method="_on_settings_pressed"]

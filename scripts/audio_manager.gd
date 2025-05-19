@@ -1,5 +1,7 @@
 extends Node
 
+@onready var CharManager = $"../CharManager"
+
 var effect : AudioEffectRecord
 var recording : AudioStreamWAV
 var index : int
@@ -37,12 +39,13 @@ func stop_recording():
 	new_delay()
 	voice()
 
-func check_volume(input_power : int) -> void:
+func check_volume(power : float) -> void:
 	if not effect.is_recording_active():
-		if input_power > threshold:
+		if power > threshold:
 			start_recording()
+			$TimerThreshold.start()
 	else:
-		if input_power > threshold:
+		if power > threshold:
 			$TimerThreshold.start()
 		else:
 			if $TimerThreshold.is_stopped():
@@ -56,13 +59,26 @@ func voice():
 	$AudioStreamPlayerW.stream = recording
 	$AudioStreamPlayerV.stream = recording
 	if sign(delay) == 1:
-		$AudioStreamPlayerW.play()
+		woufeuse_speak()
 	else:
-		$AudioStreamPlayerV.play()
+		vraisorcier_speak()
 	$TimerDelay.start()
+
+func woufeuse_speak():
+	$AudioStreamPlayerW.play()
+	CharManager.state_woufeuse = "speak"
+	
+func vraisorcier_speak():
+	$AudioStreamPlayerV.play()
+	CharManager.state_vraisorcier = "speak"
 
 func _on_timer_delay_timeout():
 	if sign(delay) == 1:
-		$AudioStreamPlayerV.play()
+		vraisorcier_speak()
 	else:
-		$AudioStreamPlayerW.play()
+		woufeuse_speak()
+
+func _on_audio_stream_player_w_finished():
+	CharManager.state_woufeuse = "idle"
+func _on_audio_stream_player_v_finished():
+	CharManager.state_vraisorcier = "idle"
