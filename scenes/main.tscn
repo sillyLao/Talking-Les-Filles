@@ -1,11 +1,13 @@
-[gd_scene load_steps=23 format=3 uid="uid://coindgqp3r1la"]
+[gd_scene load_steps=25 format=3 uid="uid://coindgqp3r1la"]
 
 [ext_resource type="Script" uid="uid://o7qn56gw5y07" path="res://scripts/main.gd" id="1_85g3d"]
 [ext_resource type="PackedScene" uid="uid://6fauqiuifkj6" path="res://scenes/ui.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://inksjlu1acf" path="res://assets/sprites/gaia2.png" id="2_sugp2"]
 [ext_resource type="Texture2D" uid="uid://dv4jki6uiqwvo" path="res://assets/sprites/gaia1.png" id="3_jyhfs"]
 [ext_resource type="Script" uid="uid://4qoxfl1ubv2m" path="res://scripts/char_manager.gd" id="3_tbgi4"]
+[ext_resource type="AudioStream" uid="uid://ljtw4ylpu37i" path="res://assets/audio/punch.wav" id="4_choun"]
 [ext_resource type="Script" uid="uid://dq3rajkhiqy2s" path="res://scripts/audio_manager.gd" id="4_jyhfs"]
+[ext_resource type="AudioStream" uid="uid://ciqre2xqrqmjp" path="res://assets/audio/filles style.mp3" id="5_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://ghceqo5c6mus" path="res://assets/sprites/ines2.png" id="6_o6xl0"]
 [ext_resource type="Texture2D" uid="uid://bf1pnllwi0yne" path="res://assets/sprites/ines1.png" id="7_tipki"]
 [ext_resource type="PackedScene" uid="uid://c6nn2t7h0jpsl" path="res://assets/blender/room1/room1.blend" id="8_tipki"]
@@ -39,6 +41,21 @@ animations = [{
 [sub_resource type="BoxShape3D" id="BoxShape3D_tipki"]
 size = Vector3(0.0615234, 2.52704, 1.4209)
 
+[sub_resource type="Animation" id="Animation_choun"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.36898, 0.36898, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_85g3d"]
 resource_name = "hit"
 length = 0.2
@@ -53,21 +70,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(0.378929, 2.82843, 1),
 "update": 0,
 "values": [Vector3(0.36898, 0.36898, 1), Vector3(0.429, 0.429, 1.163), Vector3(0.369, 0.369, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_choun"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0.36898, 0.36898, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ya4ey"]
@@ -143,6 +145,7 @@ autoplay = true
 bus = &"Woufeuse"
 
 [node name="AudioStreamPlayerV" type="AudioStreamPlayer" parent="AudioManager"]
+volume_db = -80.0
 autoplay = true
 bus = &"Vraisorcier"
 
@@ -151,6 +154,16 @@ one_shot = true
 
 [node name="TimerDelay" type="Timer" parent="AudioManager"]
 one_shot = true
+
+[node name="Punch" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("4_choun")
+max_polyphony = 2
+
+[node name="Punch2" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("5_ya4ey")
+volume_db = -28.786
+autoplay = true
+parameters/looping = true
 
 [node name="CharManager" type="Node" parent="."]
 script = ExtResource("3_tbgi4")
@@ -186,6 +199,7 @@ libraries = {
 
 [node name="Vraisorcier" type="RigidBody3D" parent="CharManager"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.372, 1.4305, 1.519)
+visible = false
 mass = 58.595
 
 [node name="Sprite" type="AnimatedSprite3D" parent="CharManager/Vraisorcier"]

@@ -1,6 +1,7 @@
 extends Control
 
 @onready var AudioManager = $"../AudioManager"
+@onready var CharManager = $"../CharManager"
 @onready var voice_woufeuse : AudioStreamPlayer = $"../AudioManager/AudioStreamPlayerW"
 @onready var voice_vraisorcier : AudioStreamPlayer = $"../AudioManager/AudioStreamPlayerV"
 @onready var input_list : OptionButton = $SettingsPanel/MicrophoneList
@@ -17,10 +18,12 @@ func _ready():
 		output_list.add_item(device)
 
 func _process(_delta):
-	$SettingsPanel/Debug.text = "[b]Input : [/b]" + str(AudioManager.input_power) + "
+	$Debug.text = "[b]Input : [/b]" + str(AudioManager.input_power) + "
 [b]Output V : [/b]" + str(AudioManager.output_power_vraisorcier) + "
 [b]Output W : [/b]" + str(AudioManager.output_power_woufeuse) + "
-[b]Delay : [/b]" + str(AudioManager.delay)
+[b]Delay : [/b]" + str(AudioManager.delay) + "
+[b]Woufeuse : [/b]" + str(CharManager.state["Woufeuse"]) + "
+[b]Vraisorcier : [/b]" + str(CharManager.state["Vraisorcier"])
 
 func _input(event : InputEvent):
 	if event.is_action_pressed("ESC"):

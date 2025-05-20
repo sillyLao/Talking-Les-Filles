@@ -39,10 +39,10 @@ func _physics_process(delta):
 			fille.linear_velocity = Vector3.ZERO
 			if not state[fname] in ["speak", "grabbed", "held"]:
 				state[fname] = "idle"
-		print(state)
 
 func hit(fille : RigidBody3D) -> void:
 	fille.get_node("Animation"+fille.name).play("hit")
+	AudioManager.get_node("Punch").play()
 
 func _on_animation_woufeuse_animation_finished(anim_name):
 	anim_finished($Woufeuse, anim_name)
