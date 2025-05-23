@@ -7,6 +7,7 @@ extends Node3D
 var mouse_pos : Vector2
 var grabbed_object : RigidBody3D
 var grab_position : Vector2
+var offset = Vector3.ZERO
 
 
 func _physics_process(_delta: float):
@@ -27,6 +28,7 @@ func _input(event: InputEvent) -> void:
 				grab(get_intersect(mouse_pos))
 		elif event.button_index == MOUSE_BUTTON_LEFT:
 			if grabbed_object:
+				offset = Vector3.ZERO
 				if CharManager.state[grabbed_object.name] == "grabbed":
 					CharManager.state[grabbed_object.name] = "falling"
 				elif CharManager.state[grabbed_object.name] == "held":
@@ -41,6 +43,7 @@ func get_intersect(mouse : Vector2) -> Node:
 	params.from = start
 	params.to = end
 	var result = space.intersect_ray(params)
+	print(result)
 	if not result.is_empty():
 		return result.collider
 	else:
@@ -53,6 +56,8 @@ func grab(object : Node):
 		grab_position = mouse_pos
 
 func get_grab_position():
-	#var pos = get_viewport().get_camera_3d().project_position(mouse, $Camera3D.position.distance_to(grabbed_object.position))
-	#return Vector3(grabbed_object.position.x, pos.y, pos.z)
-	return get_viewport().get_camera_3d().project_position(mouse_pos, $Camera3D.position.x - CharManager.default_x)
+	var pos = get_viewport().get_camera_3d().project_position(mouse_pos, $Camera3D.position.x - CharManager.default_x)
+	if offset == Vector3.ZERO:
+		offset = pos - grabbed_object.position
+	pos = pos-offset
+	return pos

@@ -30,12 +30,12 @@ func start_recording():
 func stop_recording():
 	recording = effect.get_recording()
 	effect.set_recording_active(false)
-	print(recording)
-	print(recording.format)
-	print(recording.mix_rate)
-	print(recording.stereo)
+	#print(recording)
+	#print(recording.format)
+	#print(recording.mix_rate)
+	#print(recording.stereo)
 	var data = recording.get_data()
-	print(data.size())
+	#print(data.size())
 	new_delay()
 	voice()
 

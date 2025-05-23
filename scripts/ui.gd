@@ -4,6 +4,7 @@ extends Control
 @onready var CharManager = $"../CharManager"
 @onready var voice_woufeuse : AudioStreamPlayer = $"../AudioManager/AudioStreamPlayerW"
 @onready var voice_vraisorcier : AudioStreamPlayer = $"../AudioManager/AudioStreamPlayerV"
+@onready var bgm : AudioStreamPlayer = $"../AudioManager/BGM"
 @onready var input_list : OptionButton = $SettingsPanel/MicrophoneList
 @onready var output_list : OptionButton = $SettingsPanel/SpeakerList
 
@@ -49,6 +50,12 @@ func _on_volume_slider_value_changed(value):
 		if value == -30.0:
 			voice_woufeuse.volume_db = -80
 		voice_vraisorcier.volume_db = -80
+
+func _on_musique_slider_value_changed(value):
+	bgm.volume_db = value
+	$SettingsPanel/MusiqueValue.text = str(value)
+	if value == -50.0:
+		bgm.volume_db = -80
 
 func _on_microphone_list_item_selected(index):
 	AudioServer.set_input_device(input_list.get_item_text(index))
