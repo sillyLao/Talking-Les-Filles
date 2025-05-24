@@ -43,7 +43,6 @@ func get_intersect(mouse : Vector2) -> Node:
 	params.from = start
 	params.to = end
 	var result = space.intersect_ray(params)
-	print(result)
 	if not result.is_empty():
 		return result.collider
 	else:
@@ -51,9 +50,10 @@ func get_intersect(mouse : Vector2) -> Node:
 
 func grab(object : Node):
 	if object.get_parent() == $CharManager:
-		grabbed_object = object
-		CharManager.state[grabbed_object.name] = "held"
-		grab_position = mouse_pos
+		if not CharManager.state[object.name] in ["ko", "hit", "recover"]:
+			grabbed_object = object
+			CharManager.state[grabbed_object.name] = "held"
+			grab_position = mouse_pos
 
 func get_grab_position():
 	var pos = get_viewport().get_camera_3d().project_position(mouse_pos, $Camera3D.position.x - CharManager.default_x)

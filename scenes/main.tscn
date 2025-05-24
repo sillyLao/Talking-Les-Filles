@@ -1,16 +1,19 @@
-[gd_scene load_steps=23 format=3 uid="uid://coindgqp3r1la"]
+[gd_scene load_steps=25 format=3 uid="uid://coindgqp3r1la"]
 
 [ext_resource type="Script" uid="uid://o7qn56gw5y07" path="res://scripts/main.gd" id="1_85g3d"]
 [ext_resource type="PackedScene" uid="uid://6fauqiuifkj6" path="res://scenes/ui.tscn" id="1_o5qli"]
-[ext_resource type="Texture2D" uid="uid://inksjlu1acf" path="res://assets/sprites/gaia2.png" id="2_sugp2"]
-[ext_resource type="Texture2D" uid="uid://dv4jki6uiqwvo" path="res://assets/sprites/gaia1.png" id="3_jyhfs"]
 [ext_resource type="Script" uid="uid://4qoxfl1ubv2m" path="res://scripts/char_manager.gd" id="3_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://ljtw4ylpu37i" path="res://assets/audio/punch.wav" id="4_choun"]
 [ext_resource type="Script" uid="uid://dq3rajkhiqy2s" path="res://scripts/audio_manager.gd" id="4_jyhfs"]
 [ext_resource type="AudioStream" uid="uid://ciqre2xqrqmjp" path="res://assets/audio/filles style.mp3" id="5_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://ghceqo5c6mus" path="res://assets/sprites/ines2.png" id="6_o6xl0"]
 [ext_resource type="Texture2D" uid="uid://bf1pnllwi0yne" path="res://assets/sprites/ines1.png" id="7_tipki"]
-[ext_resource type="PackedScene" uid="uid://c6nn2t7h0jpsl" path="res://assets/blender/room1/room1.blend" id="8_tipki"]
+[ext_resource type="Texture2D" uid="uid://cc0d2kqja5pj" path="res://assets/sprites/gaia_hurt.png" id="7_trceg"]
+[ext_resource type="Texture2D" uid="uid://bbfdy2qil0wb0" path="res://assets/sprites/gaia_idle.png" id="8_a8y0u"]
+[ext_resource type="Texture2D" uid="uid://cfeaaavfoyxet" path="res://assets/sprites/gaia_ko.png" id="9_jkv2x"]
+[ext_resource type="Texture2D" uid="uid://d0wx7xnthelv1" path="res://assets/sprites/gaia_speak.png" id="10_jbj1t"]
+[ext_resource type="PackedScene" uid="uid://bhglp8fnpsly6" path="res://scenes/room_1.tscn" id="13_trceg"]
+[ext_resource type="Script" uid="uid://ce1ov771pxq2r" path="res://scripts/room_1.gd" id="14_a8y0u"]
 
 [sub_resource type="Environment" id="Environment_tipki"]
 ambient_light_source = 3
@@ -19,11 +22,25 @@ ambient_light_sky_contribution = 0.59
 
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_tbgi4"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ya4ey"]
+random_pitch = 1.3
+random_volume_offset_db = 3.0
+streams_count = 1
+stream_0/stream = ExtResource("4_choun")
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_tbgi4"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_sugp2")
+"texture": ExtResource("7_trceg")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_a8y0u")
 }],
 "loop": true,
 "name": &"idle",
@@ -31,14 +48,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_jyhfs")
+"texture": ExtResource("9_jkv2x")
+}],
+"loop": true,
+"name": &"ko",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_jbj1t")
 }],
 "loop": true,
 "name": &"speak",
 "speed": 5.0
 }]
 
-[sub_resource type="Animation" id="Animation_choun"]
+[sub_resource type="Animation" id="Animation_a8y0u"]
+resource_name = "RESET_Woufeuse"
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -50,11 +76,27 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0.36898, 0.36898, 1)]
+"values": [Vector3(0.3, 0.3, 0.813)]
+}
+
+[sub_resource type="Animation" id="Animation_trceg"]
+resource_name = "hit_Woufeuse"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.2),
+"transitions": PackedFloat32Array(0.378929, 2.82843, 1),
+"update": 0,
+"values": [Vector3(0.3, 0.3, 0.813), Vector3(0.374, 0.374, 1.014), Vector3(0.3, 0.3, 0.813)]
 }
 
 [sub_resource type="Animation" id="Animation_85g3d"]
-resource_name = "hit"
+resource_name = "hit_Vraisorcier"
 length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -69,14 +111,40 @@ tracks/0/keys = {
 "values": [Vector3(0.36898, 0.36898, 1), Vector3(0.429, 0.429, 1.163), Vector3(0.369, 0.369, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_choun"]
+resource_name = "RESET_Vraisorcier"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.36898, 0.36898, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ya4ey"]
 _data = {
-&"RESET": SubResource("Animation_choun"),
-&"hit": SubResource("Animation_85g3d")
+&"RESET_Vraisorcier": SubResource("Animation_choun"),
+&"RESET_Woufeuse": SubResource("Animation_a8y0u"),
+&"hit_Vraisorcier": SubResource("Animation_85g3d"),
+&"hit_Woufeuse": SubResource("Animation_trceg")
 }
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_85g3d"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_tipki")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("6_o6xl0")
@@ -90,21 +158,17 @@ animations = [{
 "texture": ExtResource("7_tipki")
 }],
 "loop": true,
+"name": &"ko",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_tipki")
+}],
+"loop": true,
 "name": &"speak",
 "speed": 5.0
 }]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_choun"]
-size = Vector3(11.8588, 13.4729, 6.01008)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_trceg"]
-size = Vector3(11.8588, 13.4729, 9.21857)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ya4ey"]
-size = Vector3(11.8588, 4.51501, 10.9502)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_eb6dy"]
-size = Vector3(13.68, 6.26205, 8.22)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_85g3d")
@@ -155,29 +219,32 @@ one_shot = true
 one_shot = true
 
 [node name="Punch" type="AudioStreamPlayer" parent="AudioManager"]
-stream = ExtResource("4_choun")
+stream = SubResource("AudioStreamRandomizer_ya4ey")
 max_polyphony = 2
 
 [node name="CharManager" type="Node" parent="."]
 script = ExtResource("3_tbgi4")
 
 [node name="Woufeuse" type="RigidBody3D" parent="CharManager"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.372, 1.42961, -0.381)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.372, 1.42961, 1.56506)
 collision_layer = 2
-mass = 84.834
+mass = 20.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -1.3, 0)
+inertia = Vector3(0, 0, 5)
 contact_monitor = true
 max_contacts_reported = 3
 
 [node name="Sprite" type="AnimatedSprite3D" parent="CharManager/Woufeuse"]
-transform = Transform3D(-1.61286e-08, 0, 1, 0, 0.36898, 0, -0.36898, 0, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(-1.31134e-08, 0, 0.813, 0, 0.3, 0, -0.3, 0, -3.55374e-08, 0, 0, 0)
 alpha_cut = 2
 sprite_frames = SubResource("SpriteFrames_tbgi4")
 animation = &"idle"
 
 [node name="Collision" type="CollisionPolygon3D" parent="CharManager/Woufeuse"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.075, 0, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 depth = 0.15
-polygon = PackedVector2Array(-0.374337, -1.20789, -0.296978, -1.13792, -0.346953, -0.555851, -0.289459, -0.0648823, -0.45981, -0.592436, -0.647573, -0.620684, -0.685095, -0.4611, -0.371234, 0.0944963, -0.741139, 0.27672, -0.839345, 0.768758, -0.455764, 1.12656, 0.0861439, 1.14569, 0.465756, 0.676678, 0.483783, 0.305134, 0.116759, 0.100047, 0.442676, -0.24147, 0.370978, -0.432774, 0.213358, -0.377428, -0.00322661, 0.0302608, 0.109332, -0.496208, 0.124114, -1.08841, 0.219108, -1.21589, 0.196, -1.356, -0.402, -1.356)
+polygon = PackedVector2Array(-0.464779, -1.11923, -0.464779, -1.11923, -0.170468, 0.0131581, -0.40297, -0.524024, -0.620549, -0.537168, -0.68092, -0.312048, -0.191816, 0.112659, -0.425533, 0.140453, -0.581395, 0.356498, -0.547385, 0.777396, -0.117367, 1.07661, 0.450538, 0.89542, 0.618814, 0.485137, 0.469577, 0.189606, 0.22164, 0.110144, 0.621906, -0.378717, 0.595738, -0.592135, 0.39144, -0.605335, 0.14641, 0.0385971, 0.407647, -1.10014, 0.386, -1.249, -0.418983, -1.24874)
 
 [node name="RagdollReset" type="Timer" parent="CharManager/Woufeuse"]
 one_shot = true
@@ -187,10 +254,21 @@ libraries = {
 &"": SubResource("AnimationLibrary_ya4ey")
 }
 
+[node name="HitReset" type="Timer" parent="CharManager/Woufeuse"]
+wait_time = 5.0
+one_shot = true
+
+[node name="KOReset" type="Timer" parent="CharManager/Woufeuse"]
+wait_time = 3.0
+one_shot = true
+
 [node name="Vraisorcier" type="RigidBody3D" parent="CharManager"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.372, 1.4305, 1.519)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.372, 1.4305, -0.67532)
 collision_layer = 2
-mass = 58.595
+mass = 50.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -1.3, 0)
+inertia = Vector3(0, 0, 5)
 contact_monitor = true
 max_contacts_reported = 3
 
@@ -198,10 +276,10 @@ max_contacts_reported = 3
 transform = Transform3D(-1.61286e-08, 0, 1, 0, 0.36898, 0, -0.36898, 0, -4.37114e-08, 0, 0, 0)
 alpha_cut = 2
 sprite_frames = SubResource("SpriteFrames_85g3d")
-animation = &"idle"
+animation = &"ko"
 
 [node name="Collision" type="CollisionPolygon3D" parent="CharManager/Vraisorcier"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.075, 0, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 depth = 0.15
 polygon = PackedVector2Array(-0.72772, -1.1452, -0.72772, -1.1452, -0.860122, -0.714163, -0.366004, 0.00413001, -0.524032, 0.00759363, -0.670783, 0.248496, -0.857291, 0.459976, -0.562794, 0.564379, -0.612831, 0.783879, -0.399139, 0.697701, -0.172927, 1.12267, 0.121769, 0.720012, 0.372356, 0.801964, 0.342053, 0.595137, 0.648694, 0.502072, 0.509261, 0.331667, 0.383249, 0.0208127, 0.17304, 0.0479949, 0.694373, -0.594895, 0.568832, -1.02639, 0.395, -1.345, -0.430037, -1.34505)
 
@@ -213,54 +291,17 @@ libraries = {
 &"": SubResource("AnimationLibrary_ya4ey")
 }
 
-[node name="room1" parent="." instance=ExtResource("8_tipki")]
+[node name="HitReset" type="Timer" parent="CharManager/Vraisorcier"]
+wait_time = 5.0
+one_shot = true
+
+[node name="KOReset" type="Timer" parent="CharManager/Vraisorcier"]
+wait_time = 3.0
+one_shot = true
+
+[node name="Room 1" parent="." instance=ExtResource("13_trceg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.884047, 0, 0.554767)
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.884047, 0, 0.554767)
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.725739, 6.23645, 5.54771)
-shape = SubResource("BoxShape3D_choun")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.725739, 6.23645, -6.94727)
-shape = SubResource("BoxShape3D_trceg")
-
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.725739, 10.0146, 1.11371)
-shape = SubResource("BoxShape3D_ya4ey")
-
-[node name="RoomArea" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.884047, 0, 0.554767)
-monitoring = false
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="RoomArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.725739, 6.23645, 5.54771)
-shape = SubResource("BoxShape3D_choun")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="RoomArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.725739, 6.23645, -6.94727)
-shape = SubResource("BoxShape3D_trceg")
-
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="RoomArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.725739, 10.0146, 1.11371)
-shape = SubResource("BoxShape3D_ya4ey")
-
-[node name="Floor" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.884047, 0, 0.554767)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07, -3.12003, 0)
-shape = SubResource("BoxShape3D_eb6dy")
-
-[node name="FloorArea" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.884047, 0, 0.554767)
-monitoring = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FloorArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07, -3.12003, 0)
-shape = SubResource("BoxShape3D_eb6dy")
+script = ExtResource("14_a8y0u")
 
 [connection signal="finished" from="AudioManager/AudioStreamPlayerW" to="AudioManager" method="_on_audio_stream_player_w_finished"]
 [connection signal="finished" from="AudioManager/AudioStreamPlayerV" to="AudioManager" method="_on_audio_stream_player_v_finished"]
@@ -268,6 +309,10 @@ shape = SubResource("BoxShape3D_eb6dy")
 [connection signal="body_entered" from="CharManager/Woufeuse" to="CharManager" method="_on_woufeuse_body_entered"]
 [connection signal="timeout" from="CharManager/Woufeuse/RagdollReset" to="CharManager" method="_on_woufeuse_ragdoll_reset_timeout"]
 [connection signal="animation_finished" from="CharManager/Woufeuse/AnimationWoufeuse" to="CharManager" method="_on_animation_woufeuse_animation_finished"]
+[connection signal="timeout" from="CharManager/Woufeuse/HitReset" to="CharManager" method="_on_woufeuse_hit_reset_timeout"]
+[connection signal="timeout" from="CharManager/Woufeuse/KOReset" to="CharManager" method="_on_woufeuse_ko_reset_timeout"]
 [connection signal="body_entered" from="CharManager/Vraisorcier" to="CharManager" method="_on_vraisorcier_body_entered"]
 [connection signal="timeout" from="CharManager/Vraisorcier/RagdollReset" to="CharManager" method="_on_vraisorcier_ragdoll_reset_timeout"]
 [connection signal="animation_finished" from="CharManager/Vraisorcier/AnimationVraisorcier" to="CharManager" method="_on_animation_vraisorcier_animation_finished"]
+[connection signal="timeout" from="CharManager/Vraisorcier/HitReset" to="CharManager" method="_on_vraisorcier_hit_reset_timeout"]
+[connection signal="timeout" from="CharManager/Vraisorcier/KOReset" to="CharManager" method="_on_vraisorcier_ko_reset_timeout"]
