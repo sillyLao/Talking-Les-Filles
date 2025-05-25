@@ -5,8 +5,8 @@ extends Node
 @onready var Room = $"../Room 1"
 
 var state : Dictionary = {
-	"Woufeuse": "idle",
-	"Vraisorcier": "idle",
+	"Woufeuse": "x",
+	"Vraisorcier": "x",
 	"LifeWoufeuse": 3,
 	"LifeVraisorcier": 3,
 	"CollisionLimitVWoufeuse": 51779.0,
@@ -80,7 +80,7 @@ func _physics_process(delta):
 		if abs((vel.x+vel.y+vel.z)/3) < 0.01 and abs((ang.x+ang.y+ang.z)/3) < 0.01:
 			if not state[fname] in ["ko"]:
 				fille.linear_velocity = Vector3.ZERO
-				if not state[fname] in ["speak", "grabbed", "held", "recover"]:
+				if not state[fname] in ["speak", "grabbed", "held", "recover", "x"]:
 					state[fname] = "idle"
 
 
@@ -107,17 +107,17 @@ func _on_animation_vraisorcier_animation_finished(anim_name):
 	anim_finished($Vraisorcier, anim_name)
 
 func anim_finished(fille:RigidBody3D, anim_name:String):
-	var hit = "hit_"+fille.name
+	var hit_anim = "hit_"+fille.name
 	match anim_name:
-		hit:
+		hit_anim:
 			if not state[fille.name] in ["ko"]:
 				state[fille.name] = "idle"
 
 func _on_vraisorcier_body_entered(body):
-	if body in [Room.FLOOR] and not state["Vraisorcier"] in ["recover", "held", "grabbed"]:
+	if body in [Room.FLOOR] and not state["Vraisorcier"] in ["recover", "held", "grabbed", "x"]:
 		$Vraisorcier/RagdollReset.start()
 func _on_woufeuse_body_entered(body):
-	if body in [Room.FLOOR] and not state["Woufeuse"] in ["recover", "held", "grabbed"]:
+	if body in [Room.FLOOR] and not state["Woufeuse"] in ["recover", "held", "grabbed", "x"]:
 		$Woufeuse/RagdollReset.start()
 func _on_vraisorcier_ragdoll_reset_timeout():
 	if not state["Vraisorcier"] in ["grabbed", "falling", "ko"]:

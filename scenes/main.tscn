@@ -1,7 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://coindgqp3r1la"]
+[gd_scene load_steps=26 format=3 uid="uid://coindgqp3r1la"]
 
 [ext_resource type="Script" uid="uid://o7qn56gw5y07" path="res://scripts/main.gd" id="1_85g3d"]
 [ext_resource type="PackedScene" uid="uid://6fauqiuifkj6" path="res://scenes/ui.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://bp1ajhwdx7hx8" path="res://scenes/opening.tscn" id="2_jkv2x"]
 [ext_resource type="Script" uid="uid://4qoxfl1ubv2m" path="res://scripts/char_manager.gd" id="3_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://ljtw4ylpu37i" path="res://assets/audio/punch.wav" id="4_choun"]
 [ext_resource type="Script" uid="uid://dq3rajkhiqy2s" path="res://scripts/audio_manager.gd" id="4_jyhfs"]
@@ -63,6 +64,22 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_choun"]
+resource_name = "RESET_Vraisorcier"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.36898, 0.36898, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_a8y0u"]
 resource_name = "RESET_Woufeuse"
 length = 0.001
@@ -77,22 +94,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(0.3, 0.3, 0.813)]
-}
-
-[sub_resource type="Animation" id="Animation_trceg"]
-resource_name = "hit_Woufeuse"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.2),
-"transitions": PackedFloat32Array(0.378929, 2.82843, 1),
-"update": 0,
-"values": [Vector3(0.3, 0.3, 0.813), Vector3(0.374, 0.374, 1.014), Vector3(0.3, 0.3, 0.813)]
 }
 
 [sub_resource type="Animation" id="Animation_85g3d"]
@@ -111,9 +112,9 @@ tracks/0/keys = {
 "values": [Vector3(0.36898, 0.36898, 1), Vector3(0.429, 0.429, 1.163), Vector3(0.369, 0.369, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_choun"]
-resource_name = "RESET_Vraisorcier"
-length = 0.001
+[sub_resource type="Animation" id="Animation_trceg"]
+resource_name = "hit_Woufeuse"
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -121,10 +122,10 @@ tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.0666667, 0.2),
+"transitions": PackedFloat32Array(0.378929, 2.82843, 1),
 "update": 0,
-"values": [Vector3(0.36898, 0.36898, 1)]
+"values": [Vector3(0.3, 0.3, 0.813), Vector3(0.374, 0.374, 1.014), Vector3(0.3, 0.3, 0.813)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ya4ey"]
@@ -172,6 +173,7 @@ animations = [{
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_85g3d")
+opening_scene = ExtResource("2_jkv2x")
 
 [node name="UI" parent="." instance=ExtResource("1_o5qli")]
 

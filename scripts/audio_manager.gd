@@ -34,7 +34,7 @@ func stop_recording():
 	#print(recording.format)
 	#print(recording.mix_rate)
 	#print(recording.stereo)
-	var data = recording.get_data()
+	var _data = recording.get_data()
 	#print(data.size())
 	new_delay()
 	voice()
