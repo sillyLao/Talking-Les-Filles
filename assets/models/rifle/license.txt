@@ -1,0 +1,8 @@
+Model Information:
+* title:	AK-47
+* source:	https://sketchfab.com/3d-models/ak-47-c73d1429d16e4a02b48025046e20db50
+* author:	Mateusz Woliński (https://sketchfab.com/jeandiz)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

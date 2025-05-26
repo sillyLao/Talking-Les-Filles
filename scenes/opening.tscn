@@ -6,6 +6,33 @@
 [ext_resource type="Texture2D" uid="uid://b7g5hek3pw507" path="res://assets/sprites/opening_play.png" id="3_jo2c7"]
 [ext_resource type="Texture2D" uid="uid://dy8abye803b0l" path="res://assets/sprites/TALKINGLESFILLESLOGO.png" id="5_jo2c7"]
 
+[sub_resource type="Animation" id="Animation_jo2c7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="Animation" id="Animation_fvetl"]
 resource_name = "clicked"
 length = 0.75
@@ -34,7 +61,13 @@ tracks/1/keys = {
 "values": [0.0, 12.5664]
 }
 
-[sub_resource type="Animation" id="Animation_jo2c7"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_drfco"]
+_data = {
+&"RESET": SubResource("Animation_jo2c7"),
+&"clicked": SubResource("Animation_fvetl")
+}
+
+[sub_resource type="Animation" id="Animation_7f2m3"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -47,24 +80,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_drfco"]
-_data = {
-&"RESET": SubResource("Animation_jo2c7"),
-&"clicked": SubResource("Animation_fvetl")
 }
 
 [sub_resource type="Animation" id="Animation_sc7q2"]
@@ -81,21 +96,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 0.307786, 1, 0.594604, 1),
 "update": 0,
 "values": [Vector2(1, 1), Vector2(1, 1), Vector2(1.15, 1.15), Vector2(1, 1), Vector2(1.15, 1.15), Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_7f2m3"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nhif4"]

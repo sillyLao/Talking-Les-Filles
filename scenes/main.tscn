@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://coindgqp3r1la"]
+[gd_scene load_steps=28 format=3 uid="uid://coindgqp3r1la"]
 
 [ext_resource type="Script" uid="uid://o7qn56gw5y07" path="res://scripts/main.gd" id="1_85g3d"]
 [ext_resource type="PackedScene" uid="uid://6fauqiuifkj6" path="res://scenes/ui.tscn" id="1_o5qli"]
@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://d0wx7xnthelv1" path="res://assets/sprites/gaia_speak.png" id="10_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://bhglp8fnpsly6" path="res://scenes/room_1.tscn" id="13_trceg"]
 [ext_resource type="Script" uid="uid://ce1ov771pxq2r" path="res://scripts/room_1.gd" id="14_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://cced2u4wdekky" path="res://assets/models/rifle/scene.gltf" id="16_jbj1t"]
+[ext_resource type="AudioStream" uid="uid://d21i54kwdnh46" path="res://assets/audio/rifle.wav" id="17_muem4"]
 
 [sub_resource type="Environment" id="Environment_tipki"]
 ambient_light_source = 3
@@ -245,7 +247,7 @@ animation = &"idle"
 
 [node name="Collision" type="CollisionPolygon3D" parent="CharManager/Woufeuse"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-depth = 0.15
+depth = 0.01
 polygon = PackedVector2Array(-0.464779, -1.11923, -0.464779, -1.11923, -0.170468, 0.0131581, -0.40297, -0.524024, -0.620549, -0.537168, -0.68092, -0.312048, -0.191816, 0.112659, -0.425533, 0.140453, -0.581395, 0.356498, -0.547385, 0.777396, -0.117367, 1.07661, 0.450538, 0.89542, 0.618814, 0.485137, 0.469577, 0.189606, 0.22164, 0.110144, 0.621906, -0.378717, 0.595738, -0.592135, 0.39144, -0.605335, 0.14641, 0.0385971, 0.407647, -1.10014, 0.386, -1.249, -0.418983, -1.24874)
 
 [node name="RagdollReset" type="Timer" parent="CharManager/Woufeuse"]
@@ -282,7 +284,7 @@ animation = &"ko"
 
 [node name="Collision" type="CollisionPolygon3D" parent="CharManager/Vraisorcier"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-depth = 0.15
+depth = 0.1
 polygon = PackedVector2Array(-0.72772, -1.1452, -0.72772, -1.1452, -0.860122, -0.714163, -0.366004, 0.00413001, -0.524032, 0.00759363, -0.670783, 0.248496, -0.857291, 0.459976, -0.562794, 0.564379, -0.612831, 0.783879, -0.399139, 0.697701, -0.172927, 1.12267, 0.121769, 0.720012, 0.372356, 0.801964, 0.342053, 0.595137, 0.648694, 0.502072, 0.509261, 0.331667, 0.383249, 0.0208127, 0.17304, 0.0479949, 0.694373, -0.594895, 0.568832, -1.02639, 0.395, -1.345, -0.430037, -1.34505)
 
 [node name="RagdollReset" type="Timer" parent="CharManager/Vraisorcier"]
@@ -304,6 +306,24 @@ one_shot = true
 [node name="Room 1" parent="." instance=ExtResource("13_trceg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.884047, 0, 0.554767)
 script = ExtResource("14_a8y0u")
+
+[node name="Props" type="Node" parent="."]
+
+[node name="Rifle" type="Node3D" parent="Props"]
+visible = false
+
+[node name="RifleScene" parent="Props/Rifle" instance=ExtResource("16_jbj1t")]
+transform = Transform3D(-1.24578e-08, 0, 0.07, 0, 0.285, 0, -0.285, 0, -3.0598e-09, 2.555, 1.335, 0.25)
+
+[node name="Timer" type="Timer" parent="Props/Rifle"]
+wait_time = 0.2
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Props/Rifle"]
+stream = ExtResource("17_muem4")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.40988, 1.98909, 1.03523)
 
 [connection signal="finished" from="AudioManager/AudioStreamPlayerW" to="AudioManager" method="_on_audio_stream_player_w_finished"]
 [connection signal="finished" from="AudioManager/AudioStreamPlayerV" to="AudioManager" method="_on_audio_stream_player_v_finished"]

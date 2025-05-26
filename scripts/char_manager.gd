@@ -32,7 +32,7 @@ func _physics_process(delta):
 				else:
 					fsprite.play("idle")
 				if fille.get_node("RagdollReset").is_stopped():
-					fille.rotation.x = move_toward(fille.rotation.x, 0, ((fille.rotation.x/10)+5)*delta)
+					fille.rotation.z = move_toward(fille.rotation.z, 0, ((fille.rotation.z/10)+5)*delta)
 				var rot : Vector3 = fille.rotation
 				if abs((rot.x+rot.y+rot.z)/3) < 0.01:
 					fille.gravity_scale = 1
@@ -54,7 +54,7 @@ func _physics_process(delta):
 				fille.angular_velocity = Vector3.ZERO
 				fille.rotation = fille.rotation.move_toward(Vector3.ZERO, 0.03)
 				fille.position.x = move_toward(fille.position.x, default_x, 0.026)
-				if fille.rotation.z < 0.01:
+				if fille.rotation.z < 0.01 and fille.position.x == default_x:
 					state[fname] = "idle"
 					fille.gravity_scale = 1
 					fille.get_node("Collision").disabled = false
@@ -68,9 +68,10 @@ func _physics_process(delta):
 				if fille.position.y <= Room.LIMIT_VN:
 					state[fname] = "idle"
 				
-		if not state[fname] in ["ko", "recover"]:
+		if not state[fname] in ["ko", "recover", "shot"]:
 			fille.rotation.y = 0
 			fille.rotation.z = 0
+			fille.rotation.x = 0
 			fille.position.x = default_x
 			fille.position.y = clamp(fille.position.y, Room.LIMIT_VN-(abs(sin(fille.rotation.z)*0.35)), Room.LIMIT_VP)
 			fille.position.z = clamp(fille.position.z, Room.LIMIT_HN, Room.LIMIT_HP)
@@ -80,11 +81,12 @@ func _physics_process(delta):
 		if abs((vel.x+vel.y+vel.z)/3) < 0.01 and abs((ang.x+ang.y+ang.z)/3) < 0.01:
 			if not state[fname] in ["ko"]:
 				fille.linear_velocity = Vector3.ZERO
-				if not state[fname] in ["speak", "grabbed", "held", "recover", "x"]:
+				if not state[fname] in ["speak", "grabbed", "held", "recover", "x", "shot"]:
 					state[fname] = "idle"
 
 
 func hit(fille : RigidBody3D) -> void:
+	AudioManager.get_node("AudioStreamPlayer"+fille.name.left(1)).stop()
 	if state["Life"+fille.name] > 1:
 		state[fille.name] = "hit"
 		fille.get_node("Sprite").play("hurt")
@@ -100,6 +102,10 @@ func hit(fille : RigidBody3D) -> void:
 		print(fille.angular_velocity.z)
 		fille.get_node("KOReset").start()
 		AudioManager.get_node("Punch").play()
+
+func shot(fille : RigidBody3D) -> void:
+	fille.get_node("Sprite").play("ko")
+	fille.get_node("KOReset").start()
 
 func _on_animation_woufeuse_animation_finished(anim_name):
 	anim_finished($Woufeuse, anim_name)
